@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import TestList from './containers/test_list';
-import TestFormContainer from './containers/test_form_container';
+
 import TestForm from './components/test_form';
 
 class App extends Component {
@@ -14,8 +14,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-       <TestForm />
+       <div>
+        <TestForm />
         <TestList />
+        </div>
       </div>
     );
   }
