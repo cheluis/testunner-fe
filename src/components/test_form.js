@@ -21,11 +21,23 @@ function validate(values) {
   return errors;
 }
 
-const renderField = ({ input, label, type, meta: { touched, error, invalid, warning } }) => (
+function renderFieldType (type, label, input, options){
+  if(type == "select"){
+    return(
+      <select {...input} className="form-control">
+        {options}
+      </select>)
+  }else{
+    return(
+      <input {...input} className="form-control"  placeholder={label} type={type}/>)
+  }
+}
+
+const renderField = ({ input, label, type, options=null, meta: { touched, error, invalid, warning } }) => (
   <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
     <label  className="control-label">{label}</label>
     <div>
-      <input {...input} className="form-control"  placeholder={label} type={type}/>
+        {renderFieldType(type, label, input, options)}
        <div className="help-block">
       {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
       </div>
@@ -35,7 +47,7 @@ const renderField = ({ input, label, type, meta: { touched, error, invalid, warn
 
 const validateAndCreateTest = (values, dispatch) => {
   return dispatch(createTest(values))
-    .then(result => {     
+    .then(result => {
       if (result.payload.response && result.payload.response.status !== 200) {
         dispatch(createTestFailure(result.payload.response.data));
         throw new SubmissionError(result.payload.response.data);
@@ -64,9 +76,9 @@ class TestForm extends Component {
     }
   }
   createIdItems() {
-    
-    let items = [];         
-    for (let i = 1; i <= 300; i++) {             
+
+    let items = [];
+    for (let i = 1; i <= 300; i++) {
         items.push(<option key={i} value={i}>{i}</option>);
     }
     return items;
@@ -96,17 +108,25 @@ class TestForm extends Component {
                  label="Requester*" />
           <Field
                  name="test_enviroment_id"
-                 component="select"
-                 label="Test Enviroment*" >
-                  { this.createIdItems() }
-
-                 </Field>
+                 type="select"
+                 label="Test Enviroment*"
+                component={renderField}
+                options={this.createIdItems()}
+                 />
           <Field
                  name="test_template"
-                 component="select"
-                 label="Test Template*" >
-                 { this.createTestTemplateItems() }
-                 </Field>
+                 type="select"
+                 component={ renderField }
+                 label="Test Template*"
+                 options={this.createTestTemplateItems()}/>
+
+          <Field
+              name="test_script"
+              type="text"
+              component={ renderField }
+              label="Custom path" />
+
+
           <div>
             <button
                     type="submit"

@@ -17,9 +17,9 @@ export const FETCH_TEST_SUCCESS = 'FETCH_TEST_SUCCESS';
 export const FETCH_TEST_FAILURE = 'FETCH_TEST_FAILURE';
 export const RESET_ACTIVE_TEST = 'RESET_ACTIVE_TEST';
 
-//const ROOT_URL = 'http://ec2-18-194-45-220.eu-central-1.compute.amazonaws.com/api/v1';
+const ROOT_URL = 'http://ec2-18-194-45-220.eu-central-1.compute.amazonaws.com/api/v1';
 
-const ROOT_URL = 'http://localhost:8000/api/v1';
+//const ROOT_URL = 'http://localhost:8000/api/v1';
 
 export function fetchTests(){
   const request = axios.get(`${ROOT_URL}/tests/?format=json`);

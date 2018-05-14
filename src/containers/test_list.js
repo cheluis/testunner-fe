@@ -13,21 +13,21 @@ class TestList extends Component{
     }
 
     componentWillMount() {
-      
+
       this.props.fetchTests();
     }
 
 
     renderTest(tests){
-      
+
 
       return _.map(tests, test => {
         var trBg = {
           backgroundColor: "#FFFFFF"
         };
-        
+
         if(test.status === 'P'){
-          trBg.backgroundColor = "#00FF1F";          
+          trBg.backgroundColor = "#00FF1F";
         }
         if(test.status === 'F'){
           trBg.backgroundColor = "#FF2D00";
@@ -40,7 +40,7 @@ class TestList extends Component{
             <td>{test.test_enviroment_id}</td>
             <td>{test.script_tested}</td>
         </tr>
-        
+
         );
       });
   }
@@ -49,7 +49,7 @@ class TestList extends Component{
     const { tests, loading, error } = this.props.testList;
 
     if(loading) {
-      return <div className="container"><h1>Posts</h1><h3>Loading...</h3></div>      
+      return <div className="container"><h1>Posts</h1><h3>Loading...</h3></div>
     } else if(error) {
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
@@ -57,6 +57,7 @@ class TestList extends Component{
     console.log(this.state.activeTest);
     return (
       <div>
+      <TestDetail activeTest={this.state.activeTest} />   
       <table className="table table-hover">
         <thead>
           <tr>
@@ -71,14 +72,14 @@ class TestList extends Component{
           { this.renderTest(tests) }
         </tbody>
       </table>
-      <TestDetail activeTest={this.state.activeTest} />   
+
     </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return { 
+  return {
     testList: state.tests.testList
   };
 }
