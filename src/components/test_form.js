@@ -15,7 +15,7 @@ function validate(values) {
     errors.test_enviroment_id = 'Enter a Enviroment ID';
   }
 
-  if(!values.test_template && !values.test_script){
+  if((!values.test_template || values.test_template.trim() === '') && (!values.test_script || values.test_script.trim() === '')){
     errors.test_template = 'Enter a Test Template';
     errors.test_script = 'Enter a Test directory or path';
   }
@@ -24,7 +24,7 @@ function validate(values) {
 }
 
 function renderFieldType (type, label, input, options){
-  if(type == "select"){
+  if(type === "select"){
     return(
       <select {...input} className="form-control">
         {options}
@@ -79,7 +79,7 @@ class TestForm extends Component {
   }
   createIdItems() {
 
-    let items = [];
+    let items = [<option key="" value="">Select one</option>];
     for (let i = 1; i <= 300; i++) {
         items.push(<option key={i} value={i}>{i}</option>);
     }
@@ -88,6 +88,7 @@ class TestForm extends Component {
 
   createTestTemplateItems() {
       const templates = [
+          {filename: "", desc:"Select one"},
           {filename: "test_1.py", desc:"Test api one"},
           {filename: "test_2.py", desc:"Test api two"},
           {filename: "test_3.py", desc:"Test api three"},
