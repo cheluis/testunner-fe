@@ -8,14 +8,16 @@ import { connect } from 'react-redux';
 function validate(values) {
   const errors = {};
 
-  if (!values.title || values.title.trim() === '') {
-    errors.title = 'Enter a Title';
+  if (!values.username || values.username.trim() === '') {
+    errors.username = 'Enter a Requester';
   }
-  if (!values.categories || values.categories.trim() === '') {
-    errors.categories = 'Enter categories';
+  if (!values.test_enviroment_id || values.test_enviroment_id.trim() === '') {
+    errors.test_enviroment_id = 'Enter a Enviroment ID';
   }
-  if (!values.content || values.content.trim() === '') {
-    errors.content = 'Enter some content';
+
+  if(!values.test_template && !values.test_script){
+    errors.test_template = 'Enter a Test Template';
+    errors.test_script = 'Enter a Test directory or path';
   }
 
   return errors;
