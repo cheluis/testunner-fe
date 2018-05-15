@@ -1,60 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTest, fetchTestFailure, fetchTestSuccess, resetActiveTest } from '../actions';
 
+
+/*
+* Component that shows the selected test details. Receives the selected test as PropTypes
+*/
 class TestDetail extends Component{
 
   render(){
-        const test = this.props.activeTest;
+    const test = this.props.activeTest;
 
-      if(!test) {
-            return <span />
-        }
+    if(!test) {
+      return <span />
+    }
 
     return (
-        <div>
-          <h3>Test details</h3>
-          <ul>
-            <li>ID: {test.id}</li>
-            <li>Requester: {test.username}</li>
-            <li>Date created{test.created_at}</li>
-            <li>Enviroment ID{test.test_enviroment_id}</li>
-            <li>Script tested: {test.script_tested}</li>
-            <li>Log Info:{test.log_information}</li>
-          </ul>
+      <div>
+      <h3>Test details</h3>
+      <ul>
+      <li>ID: {test.id}</li>
+      <li>Requester: {test.username}</li>
+      <li>Date created{test.created_at}</li>
+      <li>Enviroment ID{test.test_enviroment_id}</li>
+      <li>Script tested: {test.script_tested}</li>
+      <li>Log Info:{test.log_information}</li>
+      </ul>
 
-        </div>
+      </div>
     );
   }
 }
 
 function mapStateToProps(globalState, ownProps) {
-    return {
-      //activeTest: globalState.tests.activeTest,
-      activeTest: ownProps.activeTest
-    };
-  }
+  return {
+    activeTest: ownProps.activeTest
+  };
+}
 
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      fetchTest: (id) => {
-        dispatch(fetchTest(id))
-          .then((result) => {
-            // Note: Error's "data" is in result.payload.response.data (inside "response")
-            // success's "data" is in result.payload.data
-            if (result.payload.response && result.payload.response.status !== 200) {
-              dispatch(fetchTestFailure(result.payload.response.data));
-            } else {
-              dispatch(fetchTestSuccess(result.payload.data))
-            }
-          })
-      },
-      resetMe: () => {
-        //clean up both activePost(currrently open) and deletedPost(open and being deleted) states
-        dispatch(resetActiveTest());
-      }
-    }
-  }
-
-
-  export default connect(mapStateToProps, mapDispatchToProps)(TestDetail);
+export default connect(mapStateToProps)(TestDetail);
