@@ -48,8 +48,8 @@ class TestList extends Component{
       return <div className="alert alert-danger">Error: {error.message}</div>
     }
     return (
-      <div>
-      <TestDetail activeTest={this.props.activeTest} />
+      <div className="row">
+      <div class="col-md-8">
       <table className="table table-hover">
         <thead>
           <tr>
@@ -64,7 +64,10 @@ class TestList extends Component{
           { this.renderTest(tests) }
         </tbody>
       </table>
-
+      </div>
+      <div className="col-md-4">
+        <TestDetail activeTest={this.props.activeTest} />
+      </div>
     </div>
     );
   }
